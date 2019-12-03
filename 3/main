@@ -1,0 +1,90 @@
+from typing import Tuple, Optional, List
+
+point = Tuple[int, int]
+
+
+def find_intersection(
+        s1: Tuple[point, point],
+        s2: Tuple[point, point]) -> Optional[point]:
+    if min(s2[0][0], s2[1][0]) <= s1[0][0] <= max(s2[0][0], s2[1][0]) \
+            and min(s1[0][1], s1[1][1]) <= s2[0][1] <= max(s1[0][1], s1[1][1]):
+        return s1[0][0], s2[0][1]
+
+    if min(s1[0][0], s1[1][0]) <= s2[0][0] <= max(s1[0][0], s1[1][0]) \
+            and min(s2[0][1], s2[1][1]) <= s1[0][1] <= max(s2[0][1], s2[1][1]):
+        return s2[0][0], s1[0][1]
+
+    return None
+
+
+def find_intersections(w1: List[Tuple[point, point]], w2: List[Tuple[point, point]]) -> List[point]:
+    ints = []
+    for segment1 in w1:
+        for segment2 in w2:
+            intersection = find_intersection(segment1, segment2)
+            if intersection:
+                ints.append(intersection)
+    ints.pop(0)
+    return ints
+
+
+def add_step(s: point, step: str) -> point:
+    if step[0] == 'U':
+        return s[0], s[1] - int(step[1:])
+    elif step[0] == 'D':
+        return s[0], s[1] + int(step[1:])
+    elif step[0] == 'L':
+        return s[0] - int(step[1:]), s[1]
+    elif step[0] == 'R':
+        return s[0] + int(step[1:]), s[1]
+
+
+def make_segments(directions: str) -> List[Tuple[point, point]]:
+    points = [(0, 0)]
+    for d in directions.split(','):
+        points.append(add_step(points[-1], d))
+    segments = []
+    for i in range(len(points) - 1):
+        segments.append((points[i], points[i + 1]))
+    return segments
+
+
+def find_closest_intersection(w1: List[Tuple[point, point]], w2: List[Tuple[point, point]]) -> int:
+    ints = find_intersections(w1, w2)
+    return min([abs(x[0]) + abs(x[1]) for x in ints[1:]])
+
+
+def point_in_segment(p: point, seg: Tuple[point, point]) -> Optional[int]:
+    if p[0] == seg[0][0] == seg[1][0] and min(seg[0][1], seg[1][1]) <= p[1] <= min(seg[0][1], seg[1][1]):
+        return abs(p[1] - seg[0][1])
+    if p[1] == seg[0][1] == seg[1][1] and min(seg[0][0], seg[1][0]) <= p[0] <= min(seg[0][0], seg[1][0]):
+        return abs(p[0] - seg[0][0])
+    return None
+
+
+def length_of_segment(seg: Tuple[point, point]) -> int:
+    return abs(seg[0][0] - seg[1][0]) + abs(seg[0][1] - seg[1][1])
+
+
+def add_segment(p: point, seg: Tuple[point, point]) -> point:
+    if p[0] == seg[0][0] == seg[1][0]:
+        return p[0], p[1] + seg[1][1] - seg[0][1]
+    return p[0] + seg[1][0] - seg[0][0], p[1]
+
+
+def find_distance(ints: List[point], wire: List[Tuple[point, point]]) -> List[int]:
+    distance = 0
+    pointer = 0, 0
+
+    distances = [-1] * len(ints)
+
+    return distances
+
+
+with open("input.txt") as file:
+    directions1 = file.readline()
+    directions2 = file.readline()
+    wire1 = make_segments(directions1)
+    wire2 = make_segments(directions2)
+    intersections = find_intersections(wire1, wire2)
+    print(find_closest_intersection(wire1, wire2))

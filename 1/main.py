@@ -1,5 +1,3 @@
-# https://adventofcode.com/2019/day/1
-
 fuel_sum = 0
 with open("input.txt") as file:
     modules = [int(line) for line in file]
