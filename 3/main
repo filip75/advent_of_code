@@ -1,11 +1,10 @@
 from typing import Tuple, Optional, List
 
 point = Tuple[int, int]
+segment = Tuple[point, point]
 
 
-def find_intersection(
-        s1: Tuple[point, point],
-        s2: Tuple[point, point]) -> Optional[point]:
+def find_intersection(s1: segment, s2: segment) -> Optional[point]:
     if min(s2[0][0], s2[1][0]) <= s1[0][0] <= max(s2[0][0], s2[1][0]) \
             and min(s1[0][1], s1[1][1]) <= s2[0][1] <= max(s1[0][1], s1[1][1]):
         return s1[0][0], s2[0][1]
@@ -17,15 +16,34 @@ def find_intersection(
     return None
 
 
-def find_intersections(w1: List[Tuple[point, point]], w2: List[Tuple[point, point]]) -> List[point]:
+def length_of_segment(seg: segment) -> int:
+    return abs(seg[0][0] - seg[1][0]) + abs(seg[0][1] - seg[1][1])
+
+
+def find_intersections(w1: List[segment], w2: List[segment]) -> Tuple[List[point], List[int], List[int]]:
+    dist_1 = [length_of_segment(w1[0])]
+    for i in range(1, len(w1)):
+        dist_1.append(dist_1[i - 1] + length_of_segment(w1[i]))
+
+    dist_2 = [length_of_segment(w2[0])]
+    for i in range(1, len(w2)):
+        dist_2.append(dist_2[i - 1] + length_of_segment(w2[i]))
+
     ints = []
-    for segment1 in w1:
-        for segment2 in w2:
+    dist_to_intersect1 = []
+    dist_to_intersect2 = []
+    for i, segment1 in enumerate(w1):
+        for j, segment2 in enumerate(w2):
             intersection = find_intersection(segment1, segment2)
             if intersection:
+                dist_to_intersect1.append(dist_1[i - 1] + length_of_segment((segment1[0], intersection)))
+                dist_to_intersect2.append(dist_2[j - 1] + length_of_segment((segment2[0], intersection)))
                 ints.append(intersection)
     ints.pop(0)
-    return ints
+    dist_to_intersect1.pop(0)
+    dist_to_intersect2.pop(0)
+
+    return ints, dist_to_intersect1, dist_to_intersect2
 
 
 def add_step(s: point, step: str) -> point:
@@ -39,46 +57,16 @@ def add_step(s: point, step: str) -> point:
         return s[0] + int(step[1:]), s[1]
 
 
-def make_segments(directions: str) -> List[Tuple[point, point]]:
+def make_segments(directions: str) -> List[segment]:
     points = [(0, 0)]
     for d in directions.split(','):
         points.append(add_step(points[-1], d))
-    segments = []
-    for i in range(len(points) - 1):
-        segments.append((points[i], points[i + 1]))
-    return segments
+    return [(points[i], points[i + 1]) for i in range(len(points) - 1)]
 
 
-def find_closest_intersection(w1: List[Tuple[point, point]], w2: List[Tuple[point, point]]) -> int:
-    ints = find_intersections(w1, w2)
-    return min([abs(x[0]) + abs(x[1]) for x in ints[1:]])
-
-
-def point_in_segment(p: point, seg: Tuple[point, point]) -> Optional[int]:
-    if p[0] == seg[0][0] == seg[1][0] and min(seg[0][1], seg[1][1]) <= p[1] <= min(seg[0][1], seg[1][1]):
-        return abs(p[1] - seg[0][1])
-    if p[1] == seg[0][1] == seg[1][1] and min(seg[0][0], seg[1][0]) <= p[0] <= min(seg[0][0], seg[1][0]):
-        return abs(p[0] - seg[0][0])
-    return None
-
-
-def length_of_segment(seg: Tuple[point, point]) -> int:
-    return abs(seg[0][0] - seg[1][0]) + abs(seg[0][1] - seg[1][1])
-
-
-def add_segment(p: point, seg: Tuple[point, point]) -> point:
-    if p[0] == seg[0][0] == seg[1][0]:
-        return p[0], p[1] + seg[1][1] - seg[0][1]
-    return p[0] + seg[1][0] - seg[0][0], p[1]
-
-
-def find_distance(ints: List[point], wire: List[Tuple[point, point]]) -> List[int]:
-    distance = 0
-    pointer = 0, 0
-
-    distances = [-1] * len(ints)
-
-    return distances
+def find_closest_intersection(w1: List[segment], w2: List[segment]) -> Tuple[int, int]:
+    ints, idw1, idw2 = find_intersections(w1, w2)
+    return min([abs(x[0]) + abs(x[1]) for x in ints[1:]]), min(map(sum, zip(idw1, idw2)))
 
 
 with open("input.txt") as file:
@@ -86,5 +74,4 @@ with open("input.txt") as file:
     directions2 = file.readline()
     wire1 = make_segments(directions1)
     wire2 = make_segments(directions2)
-    intersections = find_intersections(wire1, wire2)
     print(find_closest_intersection(wire1, wire2))
