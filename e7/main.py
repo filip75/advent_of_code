@@ -20,7 +20,7 @@ print(m)
 phases = [5, 6, 7, 8, 9]
 m = 0
 ics = [IntCode(code) for _ in range(len(phases))]
-for perm in list(permutations(phases, len(phases))):
+for perm in permutations(phases, len(phases)):
     for i, ic in enumerate(ics):
         ic.reset()
         ic.run(perm[i])
@@ -33,5 +33,5 @@ for perm in list(permutations(phases, len(phases))):
                 inp = out
         if out is None:
             break
-    m = max(m,inp)
+    m = max(m, inp)
 print(m)
