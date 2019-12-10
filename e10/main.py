@@ -1,4 +1,4 @@
-from math import gcd
+from math import gcd, asin, pi, sqrt
 from typing import Tuple, List
 
 Point = Tuple[int, int]
@@ -45,6 +45,21 @@ def eliminate_covered(station: Point, asteroids: List[Point]) -> List[Point]:
     return asteroids_copy
 
 
+def assign_angle(p: Point):
+    if p[0]:
+        v = p[0] / sqrt(p[0] ** 2 + p[1] ** 2)
+    else:
+        v = 1
+    if p[0] >= 0 and p[1] < 0:
+        return asin(v)
+    elif p[0] >= 0 and p[1] >= 0:
+        return asin(v) + pi / 2
+    elif p[0] < 0 and p[1] >= 0:
+        return asin(v) + pi
+    elif p[0] < 0 and p[1] < 0:
+        return asin(v) + pi * 3 / 2
+
+
 with open("input.txt") as file:
     asteroids = []
     for y, line in enumerate(file):
@@ -53,8 +68,17 @@ with open("input.txt") as file:
                 asteroids.append((x, y))
 
     m = 0
+    station = None
     for a in asteroids:
-        c = len(eliminate_covered(a, asteroids))
-        m = max(m, c)
-        print(f'{a} {c}')
-    print(m - 1)
+        c = len(eliminate_covered(a, asteroids)) - 1
+        if c > m:
+            m = c
+            station = a
+    print(m)
+
+    # this only works because more than 200 asteroids are visible at the beginning, otherwise after each rotation
+    # new visible asteroids should be determined
+    visible = eliminate_covered(station, asteroids)
+    asteroids_with_angles = [(a, assign_angle((a[0] - station[0], a[1] - station[1]))) for a in visible]
+    asteroids_with_angles = sorted(asteroids_with_angles, key=lambda x: x[1])
+    print(asteroids_with_angles[200][0][0] * 100 + asteroids_with_angles[200][0][1])
