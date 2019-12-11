@@ -32,7 +32,7 @@ class IntCode:
         else:
             return self.memory[self.pointer + 1 + position]
 
-    def run(self, inp: int) -> Optional[int]:
+    def run(self, inp: List[int]) -> Optional[int]:
         while True:
             op_code = str(self.memory[self.pointer])
             instruction = int(op_code[-2:])
@@ -43,9 +43,8 @@ class IntCode:
                 self.memory[self.get_address(2)] = self.get_value(0) * self.get_value(1)
                 self.pointer += 4
             elif instruction == 3:
-                if inp is not None:
-                    self.memory[self.get_address(0)] = inp
-                    inp = None
+                if inp:
+                    self.memory[self.get_address(0)] = inp.pop(0)
                     self.pointer += 2
                 else:
                     return
@@ -88,4 +87,4 @@ if __name__ == '__main__':
         code = [int(x) for x in file.readline().split(',')]
 
     ic = IntCode(code)
-    print(ic.run(5))
+    print(ic.run([5]))

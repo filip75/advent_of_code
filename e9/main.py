@@ -5,6 +5,6 @@ if __name__ == '__main__':
         code = [int(x) for x in file.readline().split(',')]
 
     ic = IntCode(code)
-    print(ic.run(1))
+    print(ic.run([1]))
     ic.reset()
-    print(ic.run(2))
+    print(ic.run([2]))
