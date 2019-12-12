@@ -34,7 +34,7 @@ class Robot:
             for i in range(width):
                 colour = self.hull.get((i, j), BLACK)
                 if colour == BLACK:
-                    print('#', end='')
+                    print('\u2588', end='')
                 else:
                     print(' ', end='')
             print()
@@ -49,13 +49,8 @@ class Robot:
         self.position = (self.position[0] + DIRECTIONS[self.orientation][0],
                          self.position[1] + DIRECTIONS[self.orientation][1])
 
-    def get_colour(self):
-        if self.position in self.hull:
-            return self.hull[self.position]
-        return BLACK
-
     def make_step(self):
-        new_colour = self.ic.run([self.get_colour()])
+        new_colour = self.ic.run([self.hull.get(self.position, BLACK)])
         if new_colour is None:
             return False
         direction = self.ic.run([])

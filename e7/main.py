@@ -12,8 +12,8 @@ for perm in permutations(phases, len(phases)):
     ic = IntCode(code)
     for i in range(5):
         ic.reset()
-        ic.run(perm[i])
-        inp = ic.run(inp)
+        ic.run([perm[i]])
+        inp = ic.run([inp])
     m = max(m, inp)
 print(m)
 
@@ -23,12 +23,12 @@ ics = [IntCode(code) for _ in range(len(phases))]
 for perm in permutations(phases, len(phases)):
     for i, ic in enumerate(ics):
         ic.reset()
-        ic.run(perm[i])
+        ic.run([perm[i]])
     inp = 0
     while True:
         out = None
         for ic in ics:
-            out = ic.run(inp)
+            out = ic.run([inp])
             if out is not None:
                 inp = out
         if out is None:
