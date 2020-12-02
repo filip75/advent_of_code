@@ -9,9 +9,13 @@ def find(memory: List[int], noun: int, verb: int) -> int:
     while True:
         op_code = memory[pointer]
         if op_code == 1:
-            memory[memory[pointer + 3]] = memory[memory[pointer + 1]] + memory[memory[pointer + 2]]
+            memory[memory[pointer + 3]] = (
+                memory[memory[pointer + 1]] + memory[memory[pointer + 2]]
+            )
         elif op_code == 2:
-            memory[memory[pointer + 3]] = memory[memory[pointer + 1]] * memory[memory[pointer + 2]]
+            memory[memory[pointer + 3]] = (
+                memory[memory[pointer + 1]] * memory[memory[pointer + 2]]
+            )
         elif op_code == 99:
             break
         pointer += 4
@@ -20,7 +24,7 @@ def find(memory: List[int], noun: int, verb: int) -> int:
 
 
 with open("input.txt") as file:
-    code = [int(x) for x in file.read().split(',')]
+    code = [int(x) for x in file.read().split(",")]
 
 for n in range(100):
     for v in range(100):

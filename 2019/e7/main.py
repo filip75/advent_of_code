@@ -3,7 +3,7 @@ from itertools import permutations
 from e5.main import IntCode
 
 with open("input.txt") as file:
-    code = [int(x) for x in file.readline().split(',')]
+    code = [int(x) for x in file.readline().split(",")]
 
 phases = [0, 1, 2, 3, 4]
 m = 0

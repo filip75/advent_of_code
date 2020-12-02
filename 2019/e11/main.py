@@ -34,9 +34,9 @@ class Robot:
             for i in range(width):
                 colour = self.hull.get((i, j), BLACK)
                 if colour == BLACK:
-                    print('\u2588', end='')
+                    print("\u2588", end="")
                 else:
-                    print(' ', end='')
+                    print(" ", end="")
             print()
 
     def rotate(self, direction: int):
@@ -46,8 +46,10 @@ class Robot:
             self.orientation = (self.orientation - 1) % 4
 
     def move_forward(self):
-        self.position = (self.position[0] + DIRECTIONS[self.orientation][0],
-                         self.position[1] + DIRECTIONS[self.orientation][1])
+        self.position = (
+            self.position[0] + DIRECTIONS[self.orientation][0],
+            self.position[1] + DIRECTIONS[self.orientation][1],
+        )
 
     def make_step(self):
         new_colour = self.ic.run([self.hull.get(self.position, BLACK)])
@@ -67,9 +69,9 @@ class Robot:
             work_finished = not self.make_step()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("input.txt") as file:
-        code = [int(x) for x in file.readline().split(',')]
+        code = [int(x) for x in file.readline().split(",")]
 
         robot = Robot(code)
         robot.work()

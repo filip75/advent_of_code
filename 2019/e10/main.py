@@ -64,7 +64,7 @@ with open("input.txt") as file:
     asteroids = []
     for y, line in enumerate(file):
         for x, char in enumerate(line):
-            if char == '#':
+            if char == "#":
                 asteroids.append((x, y))
 
     m = 0
@@ -79,6 +79,8 @@ with open("input.txt") as file:
     # this only works because more than 200 asteroids are visible at the beginning, otherwise after each rotation
     # new visible asteroids should be determined
     visible = eliminate_covered(station, asteroids)
-    asteroids_with_angles = [(a, assign_angle((a[0] - station[0], a[1] - station[1]))) for a in visible]
+    asteroids_with_angles = [
+        (a, assign_angle((a[0] - station[0], a[1] - station[1]))) for a in visible
+    ]
     asteroids_with_angles = sorted(asteroids_with_angles, key=lambda x: x[1])
     print(asteroids_with_angles[200][0][0] * 100 + asteroids_with_angles[200][0][1])

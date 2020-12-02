@@ -4,12 +4,12 @@ from itertools import combinations, permutations
 from math import ceil, sqrt, floor
 from typing import List
 
-with open('input.txt') as file:
+with open("input.txt") as file:
     moons = []
     for line in file:
-        x = int(re.findall(r'x=([\-0-9]+)', line)[0])
-        y = int(re.findall(r'y=([\-0-9]+)', line)[0])
-        z = int(re.findall(r'z=([\-0-9]+)', line)[0])
+        x = int(re.findall(r"x=([\-0-9]+)", line)[0])
+        y = int(re.findall(r"y=([\-0-9]+)", line)[0])
+        z = int(re.findall(r"z=([\-0-9]+)", line)[0])
         moons.append([[x, 0], [y, 0], [z, 0]])
 
     for _ in range(1000):

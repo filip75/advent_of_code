@@ -16,10 +16,13 @@ def compute_phase(s: List[int], p: List[int]) -> List[int]:
     return [compute_element(s, alter_pattern(p, i)) for i in range(1, len(s) + 1)]
 
 
-with open('input.txt') as file:
+with open("input.txt") as file:
     signal = [int(x) for x in file.read()]
     pattern = [0, 1, 0, -1]
     for _ in range(100):
-        signal = [compute_element(signal, alter_pattern(pattern, i)) for i in range(1, len(signal) + 1)]
+        signal = [
+            compute_element(signal, alter_pattern(pattern, i))
+            for i in range(1, len(signal) + 1)
+        ]
 
-    print(''.join(str(d) for d in signal)[:8])
+    print("".join(str(d) for d in signal)[:8])

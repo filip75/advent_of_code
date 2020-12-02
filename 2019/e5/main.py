@@ -1,8 +1,8 @@
 from typing import List, Optional
 
-POSITION_MODE = '0'
-IMMEDIATE_MODE = '1'
-RELATIVE_MODE = '2'
+POSITION_MODE = "0"
+IMMEDIATE_MODE = "1"
+RELATIVE_MODE = "2"
 
 
 class IntCode:
@@ -18,7 +18,7 @@ class IntCode:
         self.relative_base = 0
 
     def get_mode(self, position: int) -> str:
-        return str(self.memory[self.pointer])[:-2][-1 - position:-2 - position:-1]
+        return str(self.memory[self.pointer])[:-2][-1 - position : -2 - position : -1]
 
     def get_value(self, position: int) -> int:
         return self.memory[self.get_address(position)]
@@ -82,9 +82,9 @@ class IntCode:
                 return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with open("input.txt") as file:
-        code = [int(x) for x in file.readline().split(',')]
+        code = [int(x) for x in file.readline().split(",")]
 
     ic = IntCode(code)
     print(ic.run([5]))

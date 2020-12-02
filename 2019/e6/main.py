@@ -2,7 +2,12 @@ from typing import Dict, List, Optional
 
 
 class Point:
-    def __init__(self, name: str, orbitee: Optional['Point'] = None, orbiters: Optional[List['Point']] = None):
+    def __init__(
+        self,
+        name: str,
+        orbitee: Optional["Point"] = None,
+        orbiters: Optional[List["Point"]] = None,
+    ):
         self.orbiters = orbiters[:] if orbiters else []
         self.orbitee = orbitee
         self.name = name
@@ -24,7 +29,7 @@ def add_orbit(points: Dict[str, Point], orbitee: str, orbiter: str) -> None:
 
 
 def count_orbits(points: Dict[str, Point]) -> int:
-    to_visit = [(x, 1) for x in points['COM'].orbiters]
+    to_visit = [(x, 1) for x in points["COM"].orbiters]
     number_of_orbits = len(to_visit)
     while to_visit:
         current = to_visit.pop()
@@ -56,6 +61,6 @@ def count_transfers(start_point: Point, end_point: Point) -> int:
 with open("input.txt") as file:
     p = {}
     for line in file:
-        add_orbit(p, *line.strip().split(')'))
+        add_orbit(p, *line.strip().split(")"))
     print(count_orbits(p))
-    print(count_transfers(p['SAN'], p['YOU']))
+    print(count_transfers(p["SAN"], p["YOU"]))
