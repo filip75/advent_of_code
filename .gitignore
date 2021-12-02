@@ -1,2 +1,5 @@
 venv
 *.code-workspace
+.vscode
+__pychache__
+*.pyc
