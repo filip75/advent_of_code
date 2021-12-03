@@ -24,9 +24,7 @@ def most(values, bit):
     s = sum(int(value[bit]) for value in values)
     s = 1 if s >= len(values) // 2 else 0
 
-    oxygen_values = [
-        v for v in values if int(v[bit]) == s or s * 2 == len(values) and v[bit] == 1
-    ]
+    oxygen_values = [v for v in values if int(v[bit]) == s]
     return oxygen_values
 
 
@@ -34,9 +32,7 @@ def least(values, bit):
     s = sum(int(value[bit]) for value in values)
     s = 0 if s >= len(values) // 2 else 1
 
-    oxygen_values = [
-        v for v in values if int(v[bit]) == s or s * 2 == len(values) and v[bit] == 0
-    ]
+    oxygen_values = [v for v in values if int(v[bit]) == s]
     return oxygen_values
 
 
