@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 from importlib import import_module
-from os.path import join
 
 
 def main(day: str, only_first: bool) -> None:
