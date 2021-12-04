@@ -4,7 +4,7 @@ from itertools import product
 EMPTY = "x"
 
 
-def get_data() -> list:
+def get_data() -> tuple[list, list]:
     data = read_list(4)
     calls = (int(d) for d in data[0].split(","))
     boards = []
@@ -17,7 +17,7 @@ def get_data() -> list:
     return calls, boards
 
 
-def is_board_complete(board):
+def is_board_complete(board: list[list[int]]) -> bool:
     for row in board:
         if all(element == EMPTY for element in row):
             return True
@@ -31,7 +31,7 @@ def is_board_complete(board):
     return False
 
 
-def board_sum(board):
+def board_sum(board: list[list[int]]) -> int:
     return sum(sum(element for element in row if element != EMPTY) for row in board)
 
 
