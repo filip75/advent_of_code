@@ -1,4 +1,4 @@
-from input_utils import read_list
+from aoc import read_list
 
 
 def first() -> int:

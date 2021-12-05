@@ -1,5 +1,6 @@
-from input_utils import *
 from itertools import product
+
+from aoc import *
 
 EMPTY = "x"
 

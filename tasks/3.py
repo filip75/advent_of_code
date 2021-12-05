@@ -1,4 +1,4 @@
-from input_utils import *
+from aoc import *
 
 
 def prepare_input() -> list:
