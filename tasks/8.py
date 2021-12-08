@@ -51,7 +51,7 @@ def second() -> int:
 
             if len(e) == 2:
                 result += base
-            elif not has_bd and not has_cf and len(e) == 5:
+            elif not has_cf and not has_bd and len(e) == 5:
                 result += 2 * base
             elif has_cf and not has_bd and len(e) == 5:
                 result += 3 * base
@@ -59,7 +59,7 @@ def second() -> int:
                 result += 4 * base
             elif not has_cf and has_bd and len(e) == 5:
                 result += 5 * base
-            elif has_bd and not has_cf and len(e) == 6:
+            elif not has_cf and has_bd and len(e) == 6:
                 result += 6 * base
             elif len(e) == 3:
                 result += 7 * base
