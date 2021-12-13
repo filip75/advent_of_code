@@ -3,7 +3,7 @@ from collections import defaultdict
 from aoc import *
 
 
-def get_data() -> list:
+def get_data() -> dict[str, list[str]]:
     data = read_list(12)
     caves = defaultdict(list)
     for connection in data:
@@ -20,7 +20,6 @@ def first() -> int:
 
     n = 0
     while paths:
-        print(paths)
         path = paths.pop()
         adjecents = caves[path[-1]]
         for a in adjecents:
