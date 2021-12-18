@@ -4,7 +4,7 @@ from itertools import product
 from aoc import *
 
 
-def get_data() -> list:
+def get_data() -> tuple:
     data = read_file(17).strip("target area: ").split(",")
     x_input = tuple(map(int, data[0].strip()[2:].split("..")))
     y_input = tuple(map(int, data[1].strip()[2:].split("..")))
