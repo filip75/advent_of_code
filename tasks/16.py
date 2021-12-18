@@ -6,7 +6,7 @@ VERSION_LENGHT = 3
 TYPE_LENGTH = 3
 
 
-def get_data() -> list:
+def get_data() -> str:
     data = read_file(16)
 
     return "".join([f"{int(x, base=16):b}".zfill(4) for x in data])
@@ -97,5 +97,4 @@ def first() -> int:
 
 def second() -> int:
     data = get_data()
-
     return Packet(data).evaluate()
